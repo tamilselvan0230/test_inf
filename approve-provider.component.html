@@ -1,0 +1,275 @@
+ <app-admin></app-admin>
+ <!-- Page Wrapper -->
+ <div class="page-wrapper">
+    <div class="content container-fluid">
+       <!-- Breadcrumb header -->
+       <div class="page-header">
+          <div class="row">
+             <div class="col-sm-6">
+                <h3 class="page-title">Approve Provider</h3>
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item" style="cursor:pointer" routerLink="/admin/dashboard">Dashboard</li>
+                   <li class="breadcrumb-item active">Approve Provider</li>
+                </ul>
+             </div>
+             <div class="col-sm-6">
+             </div>
+          </div>
+       </div>
+       <!--Breadcrumb header-->
+       <div class="row">
+          <div class="col-sm-12">
+             <div class="card">
+                <div class="card-body">
+                     <div class="row">
+                           <div class="col-md-6">
+                                 <div class="inner-addon right-addon search-icon">
+                                       <i class="fas fa-search"></i>
+                                  <input [(ngModel)]="search_text"  (keydown.enter)="init(1)" type="text" class="form-control search-box" placeholder="Name, Mobile Number" />
+                               </div>
+                            </div>	
+                         <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                               <select class="form-control" [(ngModel)]="search_verify" (change)="init(1)">
+                                  
+                                  <option value="">--Select status--</option>
+                                  <option value="0">Awaiting Approval</option>
+                                  <option value="2">Declined</option>
+                               </select>
+                            </div>
+                         </div>
+                        
+                         <!-- <div class="col-md-4 col-sm-4">
+                            <div class="form-group has-search"> <span class="fa fa-search form-control-feedback"></span>
+                               <input type="text" [(ngModel)]="search_text" class="form-control" placeholder="Name, Mobile Number" (keyup)="init(1)"/> 
+                            </div>
+                         </div> -->
+                      </div>
+                   <div class="table-responsive">
+                      <table  class="datatable table table-hover table-center mb-0 mt-2">
+                           <thead>
+                                 <tr>
+                                    <th><label class="container-checkbox">
+                                       <input type="checkbox" id="selectall"/>
+                                       <span class="checkmark"></span>
+                                       </label>
+                                    </th>
+                                    <th>Provider ID</th>
+                                    <th>Last Name</th>
+                                    <th>First Name</th>
+                                    <th>Mobile Number</th>
+                                    <th>Email Address</th>
+                                    <th>Status</th>
+                                    <th class="text-right">Action</th>
+                                 </tr>
+                              </thead>
+                         <tbody>
+                              <tr *ngFor="let row of providerList; let i = index">
+                                    <td><label class="container-checkbox">
+                                       <input type="checkbox" class="case" name="case"/>
+                                       <span class="checkmark"></span>
+                                       </label>
+                                    </td>
+                                    <td>
+                                          <h2 class="table-avatar">
+                                             <a >{{row.providers_id}}</a>
+                                          </h2>
+                                       </td>
+                                    <td>
+                                       <h2 class="table-avatar">
+                                          <a >{{row.last_name}}</a>
+                                       </h2>
+                                    </td>
+                                    <td>
+                                       <h2 class="table-avatar">
+                                         <a >{{row.first_name}}</a>
+                                       </h2>
+                                    </td>
+                                    <td>{{row.mobile}}</td>
+                                    <td>{{row.email}}</td>
+                                    <td class="text-center badge badge-pill p-das-confirmed" *ngIf="row.is_active==1">Active</td>
+                                    <td class="text-center badge badge-pill p-das-canceled" *ngIf="row.is_active==0">Inactive</td>
+                               <td class="text-right">
+                                  <a (click)="getUserById(row,'view')" class="btn btn-sm bg-success-light" data-toggle="modal" href="#appt_details_view"><i class="fa fa-eye"></i></a>
+
+                                  <a *ngIf="row.is_verified == 0 || row.is_verified == 2" class="btn btn-sm bg-info-like" (click)="userStatusChangeAlert(row)" title="Approve" data-toggle="modal" href="#appt_details_accept"><i class="fas fa-thumbs-up"></i> </a>
+                                  <a *ngIf="row.is_verified == 0 || row.is_verified == 1" class="btn btn-sm bg-danger-light" (click)="userStatusChangeAlert(row)" title="Not Approved" data-toggle="modal" href="#appt_details_reject"> <i class="fa fa-thumbs-down"></i> </a>
+                       
+                               </td>
+                            </tr>
+                            <tr *ngIf="providerList.length == 0">
+                                 <td colspan="7" class="no-record">
+                                    <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i><b>No records found</b></p>
+                                   </td>
+                               </tr>
+                          
+                         </tbody>
+                      </table>
+                      <!-- Pagination -->
+                      <div class="d-block text-right card-footer">
+                           <ul class="pagination">
+                                <!-- {{PageSize}} - {{current_page}} - {{totalRecords}} -->
+                                <li class="page-item" *ngFor="let item of providerList | paginate: { itemsPerPage: PageSize, currentPage: current_page,totalItems: total_page }" (pageChange)="onPageChange($event)" ></li>
+                              </ul>
+                              <pagination-controls class="pull-right" (pageChange)="onPageChange($event)" directionLinks="true" ></pagination-controls>
+                         
+                          </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+       <!-- <div class="page-trans">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </div> -->
+    </div>
+ </div>
+ <!-- /Page Wrapper -->
+<!-- /Main Wrapper -->
+<!-- Approve Provider View Details start -->
+<div class="modal fade" id="appt_details_view">
+      <div class="modal-dialog modal-dialog-centered">
+         <div class="modal-content">
+            <div class="modal-header bgmodal">
+               <h5 class="modal-title prohead">Provider Details</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+            </div>
+            <div class="modal-body">
+                <ul class="info-details ">
+                      <li class="bdr-f1">
+                            <span class="title">Provider Image : </span>
+                            <span class="text"><img class="avatar-img rounded-circle pt-img"  src="{{userData.user_profile}}"></span>
+                            </li>
+                            <li class="bdr-f1">
+                                 <span class="title">Provider ID  : </span>
+                                 <span class="text">{{userData.providers_id}}</span>
+                                 </li>
+                      <li class="bdr-f1">
+                         <span class="title">Last Name  : </span>
+                         <span class="text">{{userData.last_name}}</span>
+                         </li>
+                      <li class="bdr-f1">
+                         <span class="title">First Name : </span>
+                         <span class="text">{{userData.first_name}}</span>
+                      </li>
+                      <li class="bdr-f1">
+                         <span class="title">Mobile Number : </span>
+                         <span class="text">{{userData.mobile}}</span>
+                      </li>
+                      <li class="bdr-f1">
+                         <span class="title">Email Address : </span>
+                         <span class="text">{{userData.email}}</span>
+                      </li>
+                      <li *ngIf="userData.degree_details!='' && userData.degree_details!=null" class="bdr-f1">
+                           <span class="title">Degree Details : </span>
+                           <span class="text">{{userData.degree_details}}</span>
+                        </li>
+                        <li *ngIf="userData.specialist!='' && userData.specialist!=null" class="bdr-f1">
+                              <span class="title">Specialty : </span>
+                              <span class="text">{{userData.specialist}}</span>
+                           </li>
+                           <li *ngIf="userData.insurance!='' && userData.insurance!=null" class="bdr-f1">
+                                 <span class="title">Insurances  : </span>
+                                 <span class="text">{{userData.insurance}}</span>
+                              </li>
+                      <li class="bdr-f1">
+                            <span class="title">Status : </span>
+                            <span *ngIf="userData.is_active == 1" class="text">Active</span>
+                            <span *ngIf="userData.is_active == 0" class="text">Inactive</span>
+                          </li>
+                          <!-- <li class="bdr-f1">
+                               <span class="title">Hospital Name : </span>
+                               <span class="text">Star Healthcare Hospital</span>
+                             </li> -->
+                             <li *ngIf="userData.clinic_number" class="bdr-f1">
+                                  <span class="title">Contact Number : </span>
+                                  <span class="text">{{userData.clinic_number}}</span>
+                                </li>
+                                <li *ngIf="userData.address" class="bdr-f1">
+                                     <span class="title">Contact Address : </span>
+                                     <span class="text">{{userData.address}}</span>
+                                   </li>
+                    </ul>
+            </div>
+         </div>
+      </div>
+    </div>
+<!-- Approve Provider View Details -->
+<!-- app Provider View Details -->
+<div class="modal fade custom-modal" id="appt_details_accept">
+ <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+       <div class="modal-header bgmodal">
+          <h5 class="modal-title prohead">Accept Provider</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+       </div>
+       <div class="modal-body">
+          <div class="text-center">
+             <p class="mb-4">Do you want to approve this provider?</p>
+             <button type="button" (click)="userStatusChange(1)" data-dismiss="modal" class="btn btn-save">Yes</button>
+             <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+          </div>
+       </div>
+    </div>
+ </div>
+</div>
+<!-- Approve Details -->
+<!-- app Provider View Details -->
+<div class="modal fade custom-modal" id="appt_details_reject">
+      <div class="modal-dialog modal-dialog-centered">
+         <div class="modal-content">
+            <div class="modal-header bgmodal">
+               <h5 class="modal-title prohead">Decline Provider</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+            </div>
+            <div class="modal-body">
+               <div class="text-center">
+                  <p class="mb-4">Do you want to decline this provider?</p>
+                  <button type="button" (click)="userStatusChange(2)" data-dismiss="modal" class="btn btn-save">Yes</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+               </div>
+            </div>
+         </div>
+      </div>
+     </div>
+     <!-- Approve Details -->
+    <!-- app Provider View Details -->
+<div class="modal fade custom-modal" id="appt_details_dapp">
+ <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+       <div class="modal-header bgmodal">
+          <h5 class="modal-title prohead">Decline Provider</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+       </div>
+       <div class="modal-body">
+          <div class="text-center">
+            <div class="row">
+                                    <div class="col-md-12 col-xl-12 col-sm-12">
+                                    <textarea rows="5" cols="5" class="form-control" placeholder="Enter text here"></textarea>
+                                    </div>
+                                    
+                                    </div>
+             <button type="button" class="btn btn-save">Send Message</button>
+             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+       </div>
+    </div>
+ </div>
+</div>
+<!-- Approve Details -->
