@@ -1,0 +1,79 @@
+<div class="adminlogsec">
+	<div class="adminlaye">
+		<!-- <div class="wdt-30"> 
+					<div>  
+						<div class="log-h">
+							<a href="javascript:void(0)" >
+								<img src="assets/img/logo.png" alt="">
+							 </a>
+						</div>
+						<img class="img-fluid" src="assets/img/Login.png" alt="Logo">
+				</div>
+				</div>   -->
+
+		<div class="wdt-100">
+			<div class="dis-flex">
+				<div class="authprovider-content">
+					<div class="loginbox">
+						<div class="login-right-wrap">
+							<h1 class="adh">Administrator</h1>
+							<!-- <p class="account-subtitle">Access to our dashboard</p> -->
+							<!-- Form -->
+							<form action="index.html" [formGroup]="loginForm" (ngSubmit)="onSubmit()"
+								class='login-form selected'>
+								<div class="newForm">
+									<label for="">Email</label>
+									<input class="form-control" type="email" placeholder="Email"
+										class="form-control floating" formControlName="email" required email>
+								</div>
+								<div *ngIf="submitted && fo.email.errors">
+									<p style="color:red;font-size:15px" *ngIf="fo.email.errors.required"
+										class="err-reds shake">Field cannot be empty</p>
+									<!-- <p style="color:red;font-size:15px" *ngIf="fo.emxail.errors.email" class="err-reds shake">Please enter a valid email address</p> -->
+									<p style="color:red;font-size:15px" *ngIf="fo.email.errors.pattern"
+										class="err-reds shake">Please enter a valid email address</p>
+								</div>
+								<div class="newForm">
+									<label for="">Password</label>
+									<input class="form-control" type="password" placeholder="Password"
+										class="form-control floating" formControlName="password">
+								</div>
+								<div *ngIf="submitted && fo.password.errors">
+									<p style="color:red;font-size:15px" *ngIf="fo.password.errors.required"
+										class="err-reds shake">Field cannot be empty</p>
+									<p style="color:red;font-size:15px" *ngIf="fo.password.errors.pattern"
+										class="err-reds shake">Password must be between 6-8 digits with a combination of
+										capitals, small letters, numbers and special characters</p>
+								</div>
+								<button class="btn btn-primary btn-block btn-lg login-btn mt-4" type="submit"
+									*ngIf="!loadingform">Login</button>
+								<button class="btn btn-primary btn-block btn-lg login-btn" type="button"
+									*ngIf="loadingform" disabled>Loading...</button>
+							</form>
+							<!-- /Form -->
+							<!-- <div class="text-center forgotpass"><a routerLink="/auth/forgot-password">Forgot Password?</a></div>
+											<div class="login-or">
+												<span class="or-line"></span>
+												<span class="span-or">or</span>
+											</div> -->
+							<!-- Social Login -->
+							<!-- <div class="social-login">
+												<span>Login with</span>
+												<a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a><a href="#" class="google"><i class="fab fa-google"></i></a>
+											</div> -->
+							<!-- /Social Login -->
+
+							<!-- <div class="text-center dont-have">Don’t have an account? <a routerLink="/auth/register">Register</a></div> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!-- Main Wrapper -->
+
+<!-- /Main Wrapper -->
